@@ -72,12 +72,12 @@ When you run this code, the output will be something like this:
     \<error id=-1, errorCode=2104, errorMsg=Market data farm connection is OK:usfarm>  
     \<error id=-1, errorCode=2106, errorMsg=HMDS data farm connection is OK:ushmds>  
 
-If you get this output:
+If you get this output:  
     \<error id=-1, errorCode=502, errorMsg=Couldn't connect to TWS.  Confirm that "Enable ActiveX and Socket Clients" is enabled on the TWS "Configure->API" menu.>
 
-It means that you forgot to start TWS, and herein lies an important point: TWS needs to be running in order for your software to connect to IB's servers; it's not enough simply to have TWS installed on your computer.
+it means that you forgot to start TWS, and herein lies an important point: TWS needs to be running in order for your software to connect to IB's servers; it's not enough simply to have TWS installed on your computer.
 
-So you've run this program, but you're not sure what it means (why does the output contain errors?) and it doesn't appear to have done anything useful. The truth is, this program doesn't do anything terribly useful - it doesn't place any orders or get any real-time prices or anything like that. All it does is connect to IB's servers, print out any messages that IB automatically sends to us after we're connected, and then disconnect from IB's servers. Pretty boring, I know, but before we dive into the fun stuff, it's crucial that you understand how to connect to IB and how to react to information that IB sends to your program. So let's analyze the the main() function line-by-line:
+So you've run this program, but you're not sure what it means (why does the output contain errors?) and it doesn't appear to have done anything useful. The truth is, this program doesn't do anything terribly useful: it doesn't place any orders or get any real-time prices or anything like that. All it does is connect to IB's servers, print out any messages that IB automatically sends to us after we're connected, and then disconnect from IB's servers. Pretty boring, I know, but before we dive into the fun stuff, it's crucial that you understand how to connect to IB and how to react to information that IB sends to your program. So let's analyze the the main() function line-by-line:
 
 <!-- language: lang-py -->
     conn = Connection.create(port=7496, clientId=100)
