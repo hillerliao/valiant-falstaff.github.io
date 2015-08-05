@@ -27,10 +27,14 @@ It's completely up to you whether to use TWS or IB Gateway to connect to IB's se
 _(Side note: IB has a web-based alternative to TWS called WebTrader, but WebTrader doesn't support API connections - TWS or IB Gateway are your only two API connection options.)_
 
 #### 3. Configure TWS / IB Gateway
+<<<<<<< HEAD
 Once you have TWS / IB Gateway installed, you'll need to change some configuration settings in order for your software to successfully connect to IB's servers. (The following instructions use TWS as the example, but the IB Gateway instructions are virtually identical.) Navigate to the API Settings within Global Configuration in TWS. The exact way to open API settings changes with TWS updates: sometimes the click path is Edit->Global Configuration->API->Settings and then a week later the edit button will be gone and the click path will be File->Global Configuration->API->Settings. Poke around to find it. Once in API Settings, make these changes
+=======
+Once you have TWS / IB Gateway installed, you'll need to change some configuration settings in order for your software to successfully connect to IB's servers. (The following instructions use TWS as the example, but the IB Gateway instructions are virtually identical.) Navigate to the API Settings within Global Configuration in TWS. The exact way to open API settings changes with TWS updates: sometimes the click path is Edit->Global Configuration->API->Settings and then a week later the edit button will be gone and the click path will be File->Global Configuration->API->Settings. Poke around to find it. Once in API Settings, change these things:
+>>>>>>> parent of 59ebe8d... Trying to get Configure TWS list to work 1
 1. Check the box "Enable ActiveX and Socket Clients"
 2. Set the "Socket port" to an unused port; most online tutorials recommend 7496, which is unassigned by default. It's what I use and I've never had a problem.
-3. Set the "Master API client ID" to 100
+3. Set the "Master API client ID" in the settings to 100
 4. Create a Trusted IP Address set to 127.0.0.1
 
 ![TWS API Settings]({{ site.baseurl }}/images/ibpy/getting_started/tws-api-global-configuration-settings.png)
