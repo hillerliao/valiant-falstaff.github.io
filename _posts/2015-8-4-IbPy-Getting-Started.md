@@ -7,20 +7,17 @@ Interactive Brokers, the popular online brokerage firm, has an API that lets you
 
 ### Setting Up
 #### 1. Install IbPy
-IbPy requires Python 2.5 or newer, and thanks to the work by [Ben Alex](https://github.com/benalexau), IbPy also supports Python 3, which is the syntax I'll be using in these posts (onward and upward). Download the [IbPy module](https://github.com/blampe/IbPy) at GitHub and install using the setup.py file as normal (see [this page](https://code.google.com/p/ibpy/wiki/GettingStarted) for platform-specific setup instructions).
+IbPy requires Python 2.5 or newer, and thanks to the work by [Ben Alex](https://github.com/benalexau), IbPy also supports Python 3, which is the syntax I'll be using in these posts (onward and upward). Download the IbPy module at [GitHub](https://github.com/blampe/IbPy) and install using the setup.py file as normal (see [this page](https://code.google.com/p/ibpy/wiki/GettingStarted) for platform-specific setup instructions).
 
 #### 2. Install Trader Workstation
 Trader Workstation (TWS) is Interactive Brokers' nonprogrammer-friendly standalone GUI that allows anyone with an IB account to trade directly from their computer. TWS is also the means by which a coded application connects programatically to IB's servers. Download the [TWS installer](https://www.interactivebrokers.com/en/index.php?f=552&ns=T) and install on your local machine. Note that as of this writing (August 2015) there are two download choices, TWS and TWS Latest, and only TWS Latest supports API connections, so make sure to choose TWS Latest.  
 The TWS installer is straightforward except for this dialog which asks whether you want to install IB Information System:
-
 ![TWS Installer IBIS]({{ site.baseurl }}/images/ibpy/getting_started/tws-installer-ibis-choice.png)
 
 IB Information System is irrelevant to the API, so no need to install it. You'll also notice that the installer requires you to install two programs rather than just one: Trader Workstation AND IB Gateway. These two programs cannot be installed separately, they are installed as a set. IB Gateway is made specifically for API users: you can use it to connect to IB's servers as an alternative to TWS. The advantage of using IB Gateway is that it doesn't require as much processing power or memory as TWS. The disadvantage of IB Gateway is that the visual feedback it displays on what your coded application is doing is far less organized and readable than in TWS. For instance, using TWS, if our coded application places an order for 100 Google stocks, that order will show up immediately in the 'orders' table of TWS exactly as if we had placed the order manually:
-
 ![TWS Google Order Screenshot]({{ site.baseurl }}/images/ibpy/getting_started/tws-screenshot-google-order.png)
 
 IB Gateway displays a rather cryptic log message after the order is placed:
-
 ![IB Gateway Google Order Screenshot]({{ site.baseurl }}/images/ibpy/getting_started/ib-gateway-screenshot-google-order.png)
 
 It's completely up to you whether to use TWS or IB Gateway to connect to IB's servers: both do the same crucial job of relaying information back and forth between your program and IB's servers, and they do it in the same exact way (your Python application won't receive different messages from IB's servers if you use IB Gateway instead of TWS, for instance). The only difference is that TWS provides easier-to-read feedback at a small CPU and memory cost. I use TWS.
@@ -36,7 +33,6 @@ Once you have TWS / IB Gateway installed, you'll need to change some configurati
 2. Set the "Socket port" to an unused port; most online tutorials recommend 7496, which is unassigned by default. It's what I use and I've never had a problem.
 3. Set the "Master API client ID" in the settings to 100
 4. Create a Trusted IP Address set to 127.0.0.1
-
 ![TWS API Settings]({{ site.baseurl }}/images/ibpy/getting_started/tws-api-global-configuration-settings.png)
 
 See [IB's API Connections page](https://www.interactivebrokers.com/php/whiteLabel/globalConfig/configureApi.htm) for additional information on these settings.
@@ -91,7 +87,9 @@ This line is what causes the program to react to the messages that IB sends to i
 <block>
 #### Newbie Notes
 1. [What's a thread?](http://inventwithpython.com/blog/2013/04/22/multithreaded-python-tutorial-with-threadworms/)
-2. When you pass in the reaction function as the argument to registerAll() (this reaction function is known as the 'callback'), don't call it, just pass it in as the object itself. In other words, this is wrong: _conn.registerAll(print\_message\_from\_ib())_. If you're new to programming, you might be confused as to why you would ever write out a function name without calling it, e.g. why ever write _print\_message\_from\_ib_ instead of _print\_message\_from\_ib()_? And you're even more confused about how a function can be passed in as an argument of a separate function call. As the teacher, I now have a choice: I could explain to you that functions are objects just like strings and numbers are, and they can be arguments to function calls just like strings and numbers can. But the problem with this approach is that a discussion of objects can also fly over the newbie's head. The antidote is [this excellent tutorial](https://www.jeffknupp.com/blog/2013/02/14/drastically-improve-your-python-understanding-pythons-execution-model/) by Jeff Knupp, but if for now you're just interested in getting going as quickly as possible, then let me explain in plain english that when you pass in a function name as an argument, you're essentially telling the separate thread that reacts to IB messages, "Hey, when we get a message from IB, react by calling the function that I'm sending you. I'm not calling this reaction function right now, I'm just pointing you to this function by passing it in as an argument, and you'll be the one that calls it when IB sends a message."
+2. When you pass in the reaction function as the argument to registerAll() (this reaction function is known as the 'callback'), don't call it, just pass it in as the object itself. In other words, this is wrong:
+        conn.registerAll(print_message_from_ib())
+If you're new to programming, you might be confused as to why you would ever write out a function name without calling it, e.g. why ever write _print\_message\_from\_ib instead of _print\_message\_from\_ib()? And you're even more confused about how a function can be passed in as an argument of a separate function call. As the teacher, I now have a choice: I could explain to you that functions are objects just like strings and numbers are, and they can be arguments to function calls just like strings and numbers can. But the problem with this approach is that a discussion of objects can also fly over the newbie's head. The antidote is [this excellent tutorial](https://www.jeffknupp.com/blog/2013/02/14/drastically-improve-your-python-understanding-pythons-execution-model/) by Jeff Knupp, but if for now you're just interested in getting going as quickly as possible, then let me explain in plain english that when you pass in a function name as an argument, you're essentially telling the separate thread that reacts to IB messages, "Hey, when we get a message from IB, react by calling the function that I'm sending you. I'm not calling this reaction function right now, I'm just pointing you to this function by passing it in as an argument, and you'll be the one that calls it when IB sends a message."
 3. You'll notice that _conn.registerAll(print\_message\_from\_ib) doesn't make any mention of which or how many arguments the _print\_message\_from\_ib function (AKA the callback) takes. So how is the separate thread supposed to know what arguments to pass into the callback? The answer is that it assumes it should only pass one argument into the callback, and that that argument should be the message received from IB. Therefore when you write the function definition of your callback, it must have only one parameter: the IB message. (If you need to pass in more than one argument to the function, I show how in this blog post.)
 </block>
 
