@@ -112,23 +112,19 @@ As the comment explains, the only reason this small wait exists is for the demon
     conn.disconnect()
 The _disconnect()_ method disconnects from IB's servers, but that's all it does: it doesn't destroy your Connection object or change/destroy the callback registry that you created with registerAll(). All that information is retained. If you want to re-connect, simply call conn.connect() again - no need to re-create another Connection object or re-call registerAll().
 
-Finally, let's go over the program's output. First off, you may be wondering why we did nothing in this blog post with the messages that IB sent to us except print them out. How is that helpful to you? After all, when you write your IbPy applications, you're going to want to do more with IB messages than just print them: you want to extract important information from them. Why doesn't this post show how to do that? Because that topic is worthy of its own blog post. For now, just know that the information you see in the printed output can indeed be extracted by your program and that this blog will show you how to extract it in future posts.
-
-_Note: all the messages in this output are always automatically sent by IB every time you successfully connect. You don't need to request this information (and you can't stop it from being sent)._
+Finally, let's go over the program's output. You may be wondering why we did nothing in this blog post with the messages that IB sent to us except print them out. How is that helpful to you? After all, when you write your IbPy applications, you'll want to do more with IB messages than just print them: you'll want to extract important information from them and react appropriately. Why doesn't this post show how to do that? Because that topic is worthy of its own blog post. For now, just know that the information you see in the printed output can be extracted by your program and that other posts will show you how to do that when such info is needed to complete tasks.
 
     Server Version: 76
 	TWS Time at connection:20150804 10:16:44 MST
-The very first two lines are always printed to the output, even if you haven't registered any callbacks (and even if you don't want them to be printed). They can be safely ignored (you can re-request this information from IB any time you want it).
+	<managedAccounts accountsList=123456789>
+	<nextValidId orderId=1>
 
-    <managedAccounts accountsList=123456789>
-Every IB account has an account code; a managedAccounts message simply relays the account code to the software.
-
-    <nextValidId orderId=1>
-When you place an order for a position using your software, you need to give the order a unique order ID: a number that both your software and IB's servers can use to uniquely identify that order. After placing an order you can never use that order ID again, even if you shut down and restart the software, and even if the order gets executed/canceled/whatever by IB. The nextValidId message tells you the next available orderId you can use for your next order.
+This info is automatically sent by IB every time you successfully connect. I won't go over what it all means in this post; for now just be aware that your program should be expecting this info to be sent automatically from IB upon a successful connection.
 
     <error id=-1, errorCode=2104, errorMsg=Market data farm connection is OK:usfarm.us>
     <error id=-1, errorCode=2104, errorMsg=Market data farm connection is OK:usfarm>
     <error id=-1, errorCode=2106, errorMsg=HMDS data farm connection is OK:ushmds>
+
 These errors aren't errors at all, they actually mean that you've successfully connected to IB's servers and that the connection is working properly. I know, it's stupid, and this is just one of the several instances of code cruft you'll find in the IB API. Fortunately, none of the code cruft I've run across has hindered my ability to actually do things, they're just odd quirks that you can ignore or work around once you know about them. When you get a message with errorCode 2104 or 2106, you can safely ignore it (as I do) or set a flag in your program saying that the connection is working properly. These aren't the only faux error messages: the [IB API Error Codes page](https://www.interactivebrokers.com/en/software/api/apiguide/tables/api_message_codes.htm) will help you determine which error messages are genuine errors and which aren't. If you're still in doubt, [call IB Technical Assistance](https://www.interactivebrokers.com/en/?f=customerService). I've found IB's customer service team to be pretty knowledgeable; after having called them more than 75 times, I give them a ~92% success rate in correctly answering my questions; sometimes an employee will give me incorrect information, but that's to be expected in any medium to large company.
 
 Hopefully this post gives you a leg up in getting started with IbPy. Feel free to leave a comment with any questions.
