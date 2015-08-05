@@ -7,36 +7,40 @@ Interactive Brokers, the popular online brokerage firm, has an API that lets you
 
 ### Setting Up
 #### 1. Install IbPy
-IbPy requires Python 2.5 or newer, and thanks to the work by [Ben Alex](https://github.com/benalexau), IbPy also supports Python 3, which is the syntax I'll be using in these posts (onward and upward). Download the IbPy module at [GitHub](https://github.com/blampe/IbPy) and install using the setup.py file as normal (see [this page](https://code.google.com/p/ibpy/wiki/GettingStarted) for platform-specific setup instructions).
+IbPy requires Python 2.5 or newer, and thanks to the work by [Ben Alex](https://github.com/benalexau), IbPy also supports Python 3, which is the syntax I'll be using in this blog (onward and upward). Download the IbPy module at [GitHub](https://github.com/blampe/IbPy) and install using the setup.py file as normal (see [this page](https://code.google.com/p/ibpy/wiki/GettingStarted) for platform-specific setup instructions).
 
 #### 2. Install Trader Workstation
 Trader Workstation (TWS) is Interactive Brokers' nonprogrammer-friendly standalone GUI that allows anyone with an IB account to trade directly from their computer. TWS is also the means by which a coded application connects programatically to IB's servers. Download the [TWS installer](https://www.interactivebrokers.com/en/index.php?f=552&ns=T) and install on your local machine. Note that as of this writing (August 2015) there are two download choices, TWS and TWS Latest, and only TWS Latest supports API connections, so make sure to choose TWS Latest.  
+
 The TWS installer is straightforward except for this dialog which asks whether you want to install IB Information System:
+
 ![TWS Installer IBIS]({{ site.baseurl }}/images/ibpy/getting_started/tws-installer-ibis-choice.png)
 
-IB Information System is irrelevant to the API, so no need to install it. You'll also notice that the installer requires you to install two programs rather than just one: Trader Workstation AND IB Gateway. These two programs cannot be installed separately, they are installed as a set. IB Gateway is made specifically for API users: you can use it to connect to IB's servers as an alternative to TWS. The advantage of using IB Gateway is that it doesn't require as much processing power or memory as TWS. The disadvantage of IB Gateway is that the visual feedback it displays on what your coded application is doing is far less organized and readable than in TWS. For instance, using TWS, if our coded application places an order for 100 Google stocks, that order will show up immediately in the 'orders' table of TWS exactly as if we had placed the order manually:
+IB Information System is irrelevant to the API, so no need to install it. But you'll also notice that the installer requires you to install two programs rather than just one: Trader Workstation _and_ IB Gateway. These two programs can't be installed separately, they are installed as a set. IB Gateway is made specifically for API users: you can use it to connect to IB's servers as an alternative to TWS. The advantage of using IB Gateway is that it doesn't require as much processing power and memory as TWS. The disadvantage of IB Gateway is that the visual feedback it displays on what your coded application is doing is far less organized and readable than in TWS. For instance, using TWS, if our coded application places an order for 100 Google stocks, that order will show up immediately in the _orders_ table of TWS exactly as if we had placed the order manually:
+
 ![TWS Google Order Screenshot]({{ site.baseurl }}/images/ibpy/getting_started/tws-screenshot-google-order.png)
 
-IB Gateway displays a rather cryptic log message after the order is placed:
+IB Gateway, rather, displays a cryptic log message after the order is placed:
+
 ![IB Gateway Google Order Screenshot]({{ site.baseurl }}/images/ibpy/getting_started/ib-gateway-screenshot-google-order.png)
 
-It's completely up to you whether to use TWS or IB Gateway to connect to IB's servers: both do the same crucial job of relaying information back and forth between your program and IB's servers, and they do it in the same exact way (your Python application won't receive different messages from IB's servers if you use IB Gateway instead of TWS, for instance). The only difference is that TWS provides easier-to-read feedback at a small CPU and memory cost. I use TWS.
-_(Side note: IB has a web-based alternative to TWS called WebTrader, but WebTrader doesn't support API connections - TWS or IB Gateway are your only two API connection options.)_
+It's completely up to you whether to use TWS or IB Gateway to connect to IB's servers: both do the same crucial job of relaying information back and forth between your program and IB's servers, and they do it in the same exact way (your Python application won't receive different messages from IB's servers if you use IB Gateway instead of TWS, for instance). The only difference is that TWS provides easier-to-read feedback at a small CPU and memory cost. I use TWS. _(Side note: IB has a web-based alternative to TWS called WebTrader, but WebTrader doesn't support API connections - TWS or IB Gateway are your only two API connection options.)_
 
 #### 3. Configure TWS / IB Gateway
 
-Once you have TWS / IB Gateway installed, you'll need to change some configuration settings in order for your software to successfully connect to IB's servers. (The following instructions use TWS as the example, but the IB Gateway instructions are virtually identical.) Navigate to the API Settings within Global Configuration in TWS. The exact way to open API settings changes with TWS updates: sometimes the click path is Edit->Global Configuration->API->Settings and then a week later the edit button will be gone and the click path will be File->Global Configuration->API->Settings. Poke around to find it. Once in API Settings, change these things:
+Once you have TWS / IB Gateway installed, you'll need to change some configuration settings in order for your software to successfully connect to IB's servers. (The following instructions use TWS as the example, but the IB Gateway instructions are virtually identical.) Navigate to the API Settings within Global Configuration in TWS. The exact way to open API settings changes with TWS updates: sometimes the click path is Edit->Global Configuration->API->Settings and then a week later the edit button will be gone and the click path will be File->Global Configuration->API->Settings. Poke around to find it. Once in API Settings, make these changes:
 
-1. Check the box "Enable ActiveX and Socket Clients"
+1. Check the box "Enable ActiveX and Socket Clients."
 2. Set the "Socket port" to an unused port; most online tutorials recommend 7496, which is unassigned by default. It's what I use and I've never had a problem.
 3. Set the "Master API client ID" in the settings to 100
 4. Create a Trusted IP Address set to 127.0.0.1
+
 ![TWS API Settings]({{ site.baseurl }}/images/ibpy/getting_started/tws-api-global-configuration-settings.png)
 
 See [IB's API Connections page](https://www.interactivebrokers.com/php/whiteLabel/globalConfig/configureApi.htm) for additional information on these settings.
 
 ### Your first IbPy program
-Now that everything is set up, it's time to open your IDE of choice and run this, your first IbPy script:
+Now that everything is set up, it's time to open your IDE of choice and run your first IbPy script:
 
 ```python
 from ib.opt import Connection
@@ -50,7 +54,7 @@ def main():
     conn.connect()
     
     #In future blog posts, this is where we'll write code that actually does
-    #something useful like place orders, get real-time prices, etc.
+    #something useful, like place orders, get real-time prices, etc.
     
     import time
     time.sleep(1) #Simply to give the program time to print messages sent from IB
@@ -59,17 +63,18 @@ def main():
 if __name__ == "__main__": main()
 ```
 
-When you run this code, the output will be something like this:
-    Server Version: 76
-    TWS Time at connection:20150804 10:16:44 MST
-    <managedAccounts accountsList=123456789>
-    <nextValidId orderId=1>
-    <error id=-1, errorCode=2104, errorMsg=Market data farm connection is OK:usfarm.us>
-    <error id=-1, errorCode=2104, errorMsg=Market data farm connection is OK:usfarm>
-    <error id=-1, errorCode=2106, errorMsg=HMDS data farm connection is OK:ushmds>
+When you run this code, the output will be something like this:  
+    Server Version: 76  
+    TWS Time at connection:20150804 10:16:44 MST  
+    \<managedAccounts accountsList=123456789>  
+    \<nextValidId orderId=1>  
+    \<error id=-1, errorCode=2104, errorMsg=Market data farm connection is OK:usfarm.us>  
+    \<error id=-1, errorCode=2104, errorMsg=Market data farm connection is OK:usfarm>  
+    \<error id=-1, errorCode=2106, errorMsg=HMDS data farm connection is OK:ushmds>  
 
 If you get this output:
-    <error id=-1, errorCode=502, errorMsg=Couldn't connect to TWS.  Confirm that "Enable ActiveX and Socket Clients" is enabled on the TWS "Configure->API" menu.>
+    \<error id=-1, errorCode=502, errorMsg=Couldn't connect to TWS.  Confirm that "Enable ActiveX and Socket Clients" is enabled on the TWS "Configure->API" menu.>
+
 It means that you forgot to start TWS, and herein lies an important point: TWS needs to be running in order for your software to connect to IB's servers; it's not enough simply to have TWS installed on your computer.
 
 So you've run this program, but you're not sure what it means (why does the output contain errors?) and it doesn't appear to have done anything useful. The truth is, this program doesn't do anything terribly useful - it doesn't place any orders or get any real-time prices or anything like that. All it does is connect to IB's servers, print out any messages that IB automatically sends to us after we're connected, and then disconnect from IB's servers. Pretty boring, I know, but before we dive into the fun stuff, it's crucial that you understand how to connect to IB and how to react to information that IB sends to your program. So let's analyze the the main() function line-by-line:
