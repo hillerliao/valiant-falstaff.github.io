@@ -3,7 +3,7 @@ layout: post
 title: Getting Started with IbPy
 ---
 
-Interactive Brokers, the popular online brokerage firm, has an API that lets you code automated trading applications, but the API doesn't support Python. Fortunately, several talented programmers have written IbPy, an implementation of the API for Python. Having just finished coding a 10,000+ line enterprise-class application using IbPy, I can confirm that IbPy works just as well as the 'official' Java/C++/C# APIs. In this post, I'll show you how to get started using IbPy, and in subsequent posts I'll demonstrate specific tasks such as placing orders, getting option chains and getting real-time prices. 
+Interactive Brokers, the popular online brokerage firm, has an API that lets you code automated trading applications, but the API doesn't support Python. Fortunately, several talented programmers have written IbPy, an implementation of the API for Python. Having just finished coding a 10,000+ line enterprise-class application using IbPy, I can confirm that IbPy works just as well as the 'official' Java/C++/C# APIs. In this post, I'll show you how to get started using IbPy, and in subsequent posts I'll demonstrate specific tasks such as placing orders, getting option chains, getting real-time prices, and more. 
 
 ### Setting Up
 #### 1. Install IbPy
@@ -16,7 +16,7 @@ The TWS installer is straightforward except for this dialog which asks whether y
 
 ![TWS Installer IBIS]({{ site.baseurl }}/images/ibpy/getting_started/tws-installer-ibis-choice.png)
 
-IB Information System is irrelevant to the API, so no need to install it. But you'll also notice that the installer requires you to install two programs rather than just one: Trader Workstation _and_ IB Gateway. These two programs can't be installed separately, they are installed as a set. IB Gateway is made specifically for API users: you can use it to connect to IB's servers as an alternative to TWS. The advantage of using IB Gateway is that it doesn't require as much processing power and memory as TWS. The disadvantage of IB Gateway is that the visual feedback it displays on what your coded application is doing is far less organized and readable than in TWS. For instance, using TWS, if our coded application places an order for 100 Google stocks, that order will show up immediately in the _orders_ table of TWS exactly as if we had placed the order manually:
+IB Information System is irrelevant to the API, so no need to install it. But you'll also notice that the installer requires you to install two programs rather than just one: Trader Workstation _and_ IB Gateway. These two programs can't be installed separately, they are installed as a set. IB Gateway is made specifically for API users: you can use it as an alternative to TWS to connect to IB's servers. The advantage of using IB Gateway is that it doesn't require as much processing power and memory as TWS. The disadvantage of IB Gateway is that the visual feedback it displays on what your coded application is doing is far less organized and readable than in TWS. For instance, using TWS, if our coded application places an order for 100 Google stocks, that order will show up immediately in the _orders_ table of TWS exactly as if we had placed the order manually:
 
 ![TWS Google Order Screenshot]({{ site.baseurl }}/images/ibpy/getting_started/tws-screenshot-google-order.png)
 
@@ -67,15 +67,15 @@ When you run this code, the output will be something like this:
 
     Server Version: 76  
     TWS Time at connection:20150804 10:16:44 MST  
-    \<managedAccounts accountsList=123456789>  
-    \<nextValidId orderId=1>  
-    \<error id=-1, errorCode=2104, errorMsg=Market data farm connection is OK:usfarm.us>  
-    \<error id=-1, errorCode=2104, errorMsg=Market data farm connection is OK:usfarm>  
-    \<error id=-1, errorCode=2106, errorMsg=HMDS data farm connection is OK:ushmds>  
+    <managedAccounts accountsList=123456789>  
+    <nextValidId orderId=1>  
+    <error id=-1, errorCode=2104, errorMsg=Market data farm connection is OK:usfarm.us>  
+    <error id=-1, errorCode=2104, errorMsg=Market data farm connection is OK:usfarm>  
+    <error id=-1, errorCode=2106, errorMsg=HMDS data farm connection is OK:ushmds>  
 
 If you get this output:  
 
-    \<error id=-1, errorCode=502, errorMsg=Couldn't connect to TWS.  Confirm that "Enable ActiveX and Socket Clients" is enabled on the TWS "Configure->API" menu.>  
+    <error id=-1, errorCode=502, errorMsg=Couldn't connect to TWS.  Confirm that "Enable ActiveX and Socket Clients" is enabled on the TWS "Configure->API" menu.>  
 
 it means that you forgot to start TWS, and herein lies an important point: TWS needs to be running in order for your software to connect to IB's servers; it's not enough simply to have TWS installed on your computer.
 
@@ -83,7 +83,7 @@ So you've run this program, but you're not sure what it means (why does the outp
 
 <!-- language: lang-py -->
     conn = Connection.create(port=7496, clientId=100)
-You might think that this line connects to IB's servers, but it doesn't; all it does is create a Connection object in your code. If this were the only line in main(), you wouldn't receive any messages from IB because you haven't actually connected to IB's servers. But this Connection object is what we'll use to connect to IB later on in the program - it's the crucial first step in an IbPy application. The value of the port argument needs to match the "Socket port" in the TWS API settings. The value of the clientId arg doesn't actually need to match the "Master API client ID" in the TWS API settings - you could pass in 132 or 47 or 1 as the argument and the program would work fine - but unless you're running multiple scripts different scripts to connect to the same IB account, there's no need to pass in a different value, so keep things simple by passing in the same value as "Master API client ID".
+You might think that this line connects to IB's servers, but it doesn't; all it does is create a Connection object in your code. If this were the only line in main(), you wouldn't receive any messages from IB because you haven't actually connected to IB's servers. But this Connection object is what we'll use to connect to IB later on in the program - it's the crucial first step in an IbPy application. The value of the port argument needs to match the "Socket port" in the TWS API settings. The value of the clientId arg doesn't actually need to match the "Master API client ID" in the TWS API settings - you could pass in 132 or 47 or 1 as the argument and the program would work fine - but unless you're running multiple different scripts to connect to the same IB account, there's no need to pass in a different value, so keep things simple by passing in the same value as "Master API client ID".
 
 <!-- language: lang-py -->
     conn.registerAll(print_message_from_ib)
@@ -97,7 +97,7 @@ If you're new to programming, you might be confused as to why you would ever wri
 3. You'll notice that _conn.registerAll(print\_message\_from\_ib)_ doesn't make any mention of which or how many arguments the _print\_message\_from\_ib_ function (AKA the callback) takes. So how is the separate thread supposed to know what arguments to pass into the callback? The answer is that it assumes it should only pass one argument into the callback, and that that argument should be the message received from IB. Therefore when you write the function definition of your callback, it must have only one parameter: the IB message. (If you need to pass more than one argument in to the callback, I show how in this blog post.)
 </block>
 
-I should also mention that the Connection object has both a registerAll() and a register() method. For simplicity's sake I'm only using the registerAll() method in this blog post, so I've devoted a separate blog post to explaining the difference between register() and registerAll() and when should you use one over (or in combination with) the other. Now onto the next line of code:
+I should also mention that the Connection object has both a registerAll() and a register() method. For simplicity's sake I'm only using the registerAll() method in this blog post, but I've devoted a separate blog post to explaining the difference between register() and registerAll() and when should you use one over (or in combination with) the other.
 
 <!-- language: lang-py -->
     conn.connect()
@@ -106,7 +106,7 @@ This line actually connects to IB's servers. The most important thing to know he
 <!-- language: lang-py -->
     import time
 	time.sleep(1) #Simply to give the program time to print messages sent from IB
-As the comment explains, the only reason this small wait exists is for the demonstration purposes of this tutorial: it gives IB's servers some time to send messages to our program and to gives the separate thread that processes IB messages some time to print messages to the output. Without a little wait, you'd _disconnect()_ before IB has a chance to send you any messages. 
+As the comment explains, the only reason this small wait exists is for the demonstration purposes of this tutorial: it gives IB's servers some time to send messages to our program and to gives our separate thread that processes IB messages some time to print messages to the output. Without a little wait, you'd _disconnect()_ before IB has a chance to send you any messages. 
 
 <!-- language: lang-py -->
     conn.disconnect()
@@ -125,6 +125,6 @@ This info is automatically sent by IB every time you successfully connect. I won
     <error id=-1, errorCode=2104, errorMsg=Market data farm connection is OK:usfarm>
     <error id=-1, errorCode=2106, errorMsg=HMDS data farm connection is OK:ushmds>
 
-These errors aren't errors at all, they actually mean that you've successfully connected to IB's servers and that the connection is working properly. I know, it's stupid, and this is just one of the several instances of code cruft you'll find in the IB API. Fortunately, none of the code cruft I've run across has hindered my ability to actually do things, they're just odd quirks that you can ignore or work around once you know about them. When you get a message with errorCode 2104 or 2106, you can safely ignore it (as I do) or set a flag in your program saying that the connection is working properly. These aren't the only faux error messages: the [IB API Error Codes page](https://www.interactivebrokers.com/en/software/api/apiguide/tables/api_message_codes.htm) will help you determine which error messages are genuine errors and which aren't. If you're still in doubt, [call IB Technical Assistance](https://www.interactivebrokers.com/en/?f=customerService). I've found IB's customer service team to be pretty knowledgeable; after having called them more than 75 times, I give them a ~92% success rate in correctly answering my questions; sometimes an employee will give me incorrect information, but that's to be expected in any medium to large company.
+These errors aren't errors at all, they actually mean that you've successfully connected to IB's servers and that the connection is working properly. I know, it's stupid, and this is just one of the several instances of code cruft you'll find in the IB API. Fortunately, none of the code cruft I've run across has hindered my ability to actually do things, they're just odd quirks that you can ignore or work around once you know about them. When you get a message with errorCode 2104 or 2106, you can safely ignore it (as I do) or set a flag in your program saying that the connection is working properly. These aren't the only faux error messages: the [IB API Error Codes page](https://www.interactivebrokers.com/en/software/api/apiguide/tables/api_message_codes.htm) will help you determine which error messages are genuine errors and which aren't. If you're still in doubt, [call IB Technical Assistance](https://www.interactivebrokers.com/en/?f=customerService). I've found IB's customer service team to be pretty knowledgeable; after having called them more than 75 times (my mom is so jealous), I give them a ~92% success rate in correctly answering my questions; sometimes an employee will give me incorrect information, but that's to be expected in any medium to large company.
 
-Hopefully this post gives you a leg up in getting started with IbPy. Feel free to leave a comment with any questions.
+Hopefully this post gives you a leg up in getting started with IbPy. Feel free to leave a comment with any questions, and see my other blog posts to get started coding the real juicy juicy.
