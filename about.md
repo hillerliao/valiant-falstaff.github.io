@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-Python programmer, regular showerer, staunch anti-cancerist. 
+Python programmer, regular showerer, staunchly opposed to cancer and Michael Bay movies 
 
 ### Skillz
 #### Good
@@ -12,6 +12,6 @@ Python, SQL, web scraping, algorithmic analysis, Drupal, HTML, CSS, snowboarding
 #### N00b-Fair
 C/C++, Javascript, PHP, Django, web security, network stacks, cooking
 
-### What More Could You Possibly Need to Know?
+### What More Do You Want from Me?
 
 [stad718@gmail.com](mailto:stad718@gmail.com)
