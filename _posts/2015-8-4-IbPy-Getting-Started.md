@@ -7,7 +7,7 @@ Interactive Brokers, the popular online brokerage firm, has an API that lets you
 
 ### Setting Up
 #### 1. Install IbPy
-IbPy requires Python 2.5 or newer, and thanks to the work by [Ben Alex](https://github.com/benalexau), IbPy also supports Python 3, which is the syntax I'll be using in this blog (onward and upward). Download the IbPy module at [GitHub](https://github.com/blampe/IbPy) and install using the included setup.py file (see [this page](https://code.google.com/p/ibpy/wiki/GettingStarted) for platform-specific setup instructions).
+IbPy requires Python 2.5 or newer, and thanks to the work by [Ben Alex](https://github.com/benalexau), IbPy also supports Python 3, which is the syntax I'll be using in this blog (onward and upward). Download the [IbPy module](https://github.com/blampe/IbPy) at GitHub and install using the included setup.py file (see [this page](https://code.google.com/p/ibpy/wiki/GettingStarted) for platform-specific setup instructions).
 
 #### 2. Install Trader Workstation
 Trader Workstation (TWS) is Interactive Brokers' nonprogrammer-friendly standalone GUI that allows anyone with an IB account to trade directly from their computer. TWS is also the means by which a coded application connects programatically to IB's servers. Download the [TWS installer](https://www.interactivebrokers.com/en/index.php?f=552&ns=T) and install on your local machine. Note that as of this writing (August 2015) there are two download choices, TWS and TWS Latest, and only TWS Latest supports API connections, so make sure to choose TWS Latest.  
