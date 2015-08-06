@@ -28,7 +28,9 @@ def main():
     
 if __name__ == "__main__": main()
 ```
+
 This outputs:
+
 ```
 Server Version: 76
 TWS Time at connection:20150803 10:55:23 MST
@@ -40,9 +42,11 @@ Rosalind: <error id=-1, errorCode=2106, errorMsg=HMDS data farm connection is OK
 ```
 
 As you can see, instead of calling registerAll() without any additional arguments, as so:
+
 ```python3
 conn.registerAll(print_message_from_ib)
 ```
+
 we called it with a lambda function as its argument, which allows us to pass in the current_user variable:
 
 ```python3
