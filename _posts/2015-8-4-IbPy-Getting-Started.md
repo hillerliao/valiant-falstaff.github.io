@@ -42,7 +42,7 @@ See [IB's API Connections page](https://www.interactivebrokers.com/php/whiteLabe
 ### Your first IbPy program
 Now that everything is set up, it's time to open your IDE of choice and run your first IbPy script:
 
-```python
+```python3
 from ib.opt import Connection
 
 def print_message_from_ib(msg):
@@ -81,12 +81,12 @@ it means that you forgot to start TWS, and herein lies an important point: TWS n
 
 So you've run this program, but you're not sure what it means (why does the output contain errors?) and it doesn't appear to have done anything useful. The truth is, this program doesn't do anything terribly useful: it doesn't place any orders or get any real-time prices or anything like that. All it does is connect to IB's servers, print out any messages that IB automatically sends to us after we're connected, and then disconnect from IB's servers. Pretty boring, I know, but before we dive into the fun stuff, it's crucial that you understand how to connect to IB and how to react to information that IB sends to your program. So let's analyze the the main() function line-by-line:
 
-```python
+```python3
     conn = Connection.create(port=7496, clientId=100)
 ```
 You might think that this line connects to IB's servers, but it doesn't; all it does is create a Connection object in your code. If this were the only line in main(), you wouldn't receive any messages from IB because you haven't actually connected to IB's servers. But this Connection object is what we'll use to connect to IB later on in the program - it's the crucial first step in an IbPy application. The value of the port argument needs to match the "Socket port" in the TWS API settings. The value of the clientId arg doesn't actually need to match the "Master API client ID" in the TWS API settings - you could pass in 132 or 47 or 1 as the argument and the program would work fine - but unless you're running multiple different scripts to connect to the same IB account, there's no need to pass in a different value, so keep things simple by passing in the same value as "Master API client ID".
 
-```python
+```python3
     conn.registerAll(print_message_from_ib)
 ```
 This line is what causes the program to react to the messages that IB sends to it. If this line didn't exist, our program wouldn't do anything when IB sends us a message; the message would just arrive at our computer and then disappear forever. When we call registerAll(), the program starts a separate thread in the background whose job is to do nothing but wait for messages that IB sends to the program, and once it receives a message from IB, react to the message. How does it react? By calling the function we pass in as an argument to registerAll() (passing a function as an argument to another function is known as the [callback mechanism](http://stackoverflow.com/questions/1319074/parallel-python-what-is-a-callback)). In this case we passed in the _print\_message\_from\_ib_ function, which doesn't do anything interesting, it simply prints out the message for demonstration purposes. In a real-world case this function would save historical stock prices to a list or save the brokerage fees of a financial order or set a flag confirming that a stock has dipped below a certain price, etc.
@@ -101,18 +101,18 @@ If you're new to programming, you might be confused as to why you would ever wri
 
 I should also mention that the Connection object has both a registerAll() and a register() method. For simplicity's sake I'm only using the registerAll() method in this blog post, but I've devoted a separate blog post to explaining the difference between register() and registerAll() and when should you use one over (or in combination with) the other.
 
-```python
+```python3
     conn.connect()
 ```
 This line actually connects to IB's servers. The most important thing to know here is that you should call this _after_ calling _registerAll()_, not before, because once you connect, IB automatically sends you messages without you requesting them. At the bare minimum, it sends you a message saying that your connection to its servers was successful, but it will also send you order information on any orders that the software has placed in the past 24 hours. And sometimes (depending on when the order was executed and when the last time your software connected to IB's servers was), these order messages cannot be retrieved any other way, so if you don't process these messages immediately after calling _connect()_, you could lose the info in those messages forever. The exact details on handling order messages from IB is a discussion for another blog post, but my whole point is that it's crucially important that your callbacks are registered with the _registerAll()/register()_ methods _before_ you call the _connect()_ method. if you run _register()/registerAll()_ after _connect()_, messages might arrive from IB's servers before the _register()/registerAll()_ methods get the callbacks registered (a classic example of a race condition), in which case those messages disappear. To be clear, the messages don't sit in some list waiting to be handled - if you don't have any callbacks registered, the messages will pass through your program unhandled and you may never be able to re-request them from IB.
 
-```python
+```python3
     import time
 	time.sleep(1) #Simply to give the program time to print messages sent from IB
 ```
 As the comment explains, the only reason this small wait exists is for the demonstration purposes of this tutorial: it gives IB's servers some time to send messages to our program and to gives our separate thread that processes IB messages some time to print messages to the output. Without a little wait, you'd _disconnect()_ before IB has a chance to send you any messages. 
 
-```python
+```python3
     conn.disconnect()
 ```
 The _disconnect()_ method disconnects from IB's servers, but that's all it does: it doesn't destroy your Connection object or change/destroy the callback registry that you created with registerAll(). All that information is retained. If you want to re-connect, simply call conn.connect() again - no need to re-create another Connection object or re-call registerAll().
