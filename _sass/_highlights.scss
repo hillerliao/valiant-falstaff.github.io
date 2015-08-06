@@ -7,13 +7,14 @@
   //-webkit-box-shadow: 3px 3px rgba(0,0,0,0.1);
   //box-shadow: 3px 3px rgba(0,0,0,0.1);
   margin: 20px 0 20px 0;
-  overflow: auto;
+  overflow: auto; /*Creates scroll bars only when necessary*/
+  line-height: 100%; /*decreases the space between lines in the code areas*/
 }
 
 code {
-  font-family:'Bitstream Vera Sans Mono','Courier', monospace;
-  font-size: 15px;
-  line-height: 0;
+  //font-family:'Bitstream Vera Sans Mono','Courier', monospace;
+  font-family:Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,sans-serif; /*Taken from Stack Overflow*/
+  font-size: 15px; /*slightly smaller than the normal text*/
 }
 
 .highlight .c { color: #586E75 } /* Comment */
