@@ -24,7 +24,7 @@ IB Gateway, rather, displays a cryptic log message after the order is placed:
 
 ![IB Gateway Google Order Screenshot]({{ site.baseurl }}/images/ibpy/getting_started/ib-gateway-screenshot-google-order.png)
 
-It's completely up to you whether to use TWS or IB Gateway to connect to IB's servers: both do the same crucial job of relaying information back and forth between your program and IB's servers, and they do it in the same exact way (your Python application won't receive different messages from IB's servers if you use IB Gateway instead of TWS, for instance). The only difference is that TWS provides easier-to-read feedback at a small CPU and memory cost. I use TWS. _(Side note: IB has a web-based alternative to TWS called WebTrader, but WebTrader doesn't support API connections - TWS or IB Gateway are your only two API connection options.)_
+It's completely up to you whether to use TWS or IB Gateway to connect to IB's servers: both do the same crucial job of relaying information back and forth between your program and IB's servers, and they do it in the same exact way (your Python application won't receive different messages from IB's servers if you use IB Gateway instead of TWS, for instance). The only difference is that TWS provides easier-to-read feedback at a small CPU and memory cost. I use TWS. _(Side note: IB has a web-based alternative to TWS called WebTrader, but WebTrader doesn't support API connections - TWS and IB Gateway are your only two API connection options.)_
 
 #### 3. Configure TWS / IB Gateway
 
