@@ -58,8 +58,3 @@ You can pass in as many arguments as you want using lambda. Let's say your _prin
 ```python3
 conn.registerAll(lambda msg: print_message_from_ib(msg, current_user, arg_3, arg_4, arg_5, arg_6, arg_7))
 ```
-
-
-
-
-
