@@ -4,12 +4,14 @@ title: About
 permalink: /about/
 ---
 
-Some information about you!
+Python programmer, regular showerer, staunch anti-cancerist. 
 
-### More Information
+### Skillz
+#### Good
+Python, SQL, web scraping, algorithmic analysis, Drupal, HTML, CSS, snowboarding, [intelligence, getting things done](http://www.joelonsoftware.com/articles/GuerrillaInterviewing3.html)
+#### N00b-Fair
+C/C++, Javascript, PHP, Django, web security, network stacks, cooking
 
-A place to include any other types of information that you'd like to include about yourself.
+### What More Could You Possibly Need to Know?
 
-### Contact me
-
-[email@domain.com](mailto:email@domain.com)
+[stad718@gmail.com](mailto:stad718@gmail.com)
