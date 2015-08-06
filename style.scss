@@ -152,7 +152,10 @@ img {
 
 .wrapper-masthead {
   margin-bottom: 50px;
-  background-color: #6d6f71;
+}
+
+.wrapper-masthead.container {
+    background-color: #595b5d;
 }
 
 .masthead {
