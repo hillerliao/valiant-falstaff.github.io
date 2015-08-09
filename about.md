@@ -8,7 +8,7 @@ Python programmer, regular showerer, staunchly opposed to cancer and Michael Bay
 
 ### Skillz
 #### Good
-Python, SQL, web scraping, algorithmic analysis, Drupal, HTML, CSS, snowboarding, [intelligence, getting things done](http://www.joelonsoftware.com/articles/GuerrillaInterviewing3.html)
+Python, SQL, web scraping, algorithmic analysis, GUI programming & design, Drupal, HTML, CSS, snowboarding, [intelligence, getting things done](http://www.joelonsoftware.com/articles/GuerrillaInterviewing3.html)
 #### N00b-Fair
 C/C++, Javascript, PHP, Django, web security, network stacks, cooking
 
