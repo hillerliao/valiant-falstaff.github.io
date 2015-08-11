@@ -12,6 +12,6 @@ Python, SQL, web scraping, algorithmic analysis, GUI programming & design, Drupa
 #### N00b-Fair
 C/C++, Javascript, PHP, Django, web security, network stacks, cooking
 
-### What More Do You Want from Me?
+### What More Could You Possibly Want?
 
 [stad718@gmail.com](mailto:stad718@gmail.com)
