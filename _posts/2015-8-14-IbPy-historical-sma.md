@@ -8,3 +8,11 @@ _Note: This blog post builds on topics covered in previous posts: see the [Getti
 When I first started working with the Interactive Brokers API, I assumed a task as common as getting a historical Simple Moving Average would be baked into the API - something like getHistoricalSMA(). I was wrong: getting an SMA is actually quite an involved process. That's why I've created a package set for IbPy users that makes it easy to get a historical SMA. 
 
 First, download the [package set from Github](https://github.com/valiant-falstaff/IbPy-Get-Historical-SMA), then make sure that the three 3rd-party modules this code uses - [dateutil](https://labix.org/python-dateutil), [pytz](https://pypi.python.org/pypi/pytz/), and [tzlocal](https://pypi.python.org/pypi/tzlocal) - are installed. Then open _get\_historical\_sma.py_ in your IDE/editor of choice. The two important lines in this script are:
+
+```python3
+my_security = Security(my_ib, symbol='GOOG', secType='STK', exchange='SMART')
+```
+and
+```python3
+sma = my_security.get_historical_sma(length=150, barSizeSetting='1 day', ohlc='CLOSE', whatToShow='MIDPOINT', endDateTime='now')
+```
