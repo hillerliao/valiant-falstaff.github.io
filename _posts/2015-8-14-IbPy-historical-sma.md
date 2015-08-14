@@ -12,25 +12,21 @@ First, download the [package set from Github](https://github.com/valiant-falstaf
 ```python3
 my_security = Security(my_ib, symbol='GOOG', secType='STK', exchange='SMART')
 ```
-
 and
-
 ```python3
 sma = my_security.get_historical_sma(length=150, barSizeSetting='1 day', ohlc='CLOSE', whatToShow='MIDPOINT', endDateTime='now')
 ```
 
 The arguments of these two functions are what you'll edit to get your SMA of choice. The first function targets the security you want to get an SMA for, and it can be any ticker symbol, even symbols that aren't technically securities, like indexes such as VIX. The second function is where you'll define the parameters of your historical SMA. The example code retrieves a 150-day SMA for the midpoint (avg of bid/ask) of Google close prices. You can edit these arguments to get a 10-day IBM SMA of Open Bid prices or a 10-hour APPL High Ask or a 97 minute MSFT Last Bid, etc. See IB's [reqHistoricalData() documentation page](https://www.interactivebrokers.com/en/software/api/apiguide/java/reqhistoricaldata.htm) for the acceptable argument inputs. There are also limitations to how far back your SMAs can reach: see [IB's Historical Data Limitations](https://www.interactivebrokers.com/en/software/api/apiguide/tables/historical_data_limitations.htm) page for details. You can also see the docstrings of the function definitions within the code if IB's online documentation is incomplete or otherwise sucks (which it often does). There are several things to know about this code:
 
-1. The SMAs don't include any after-hours values, only trading-hours values (most devs will want this functionality). This means that if you get a 10-hour SMA, for example, the SMA will include however many hours have passed in today's trading day so far and then it will jump to the final hour of the previous trading day and include hours from there. The SMAs never include after-hours information, even if an SMA spans multiple trading days.
-2. You can enter a custom datetime into the _endDateTime_ arg of the _get\_historical\_sma_ function if instead of historical data that includes info from 1 second ago you want information just from last week, last month, or last year. For instance, if you want a 10-day SMA from the two weeks of June 15-26, 2015, pass in a datetime object set to June 26, 2015 anytime after trading hours.
-3. As you play around with this code you'll invariably raise this error from IB:
-
-```python3
-error id=1, errorCode=162, errorMsg=Historical Market Data Service error message:invalid step: 1
-```
-
-The reason is because you've violated IB's historical data request limitations noted above. You may think you haven't violated the limitations, but you have: [IB's Historical Data Limitations](https://www.interactivebrokers.com/en/software/api/apiguide/tables/historical_data_limitations.htm) page doesn't always correspond with IB's true limitations. For example, with my paper trading account, when I want to get an SMA with _barSizeSetting='1-sec'_, I can set the length to 1998 but setting to 1999 throws this error; I can get a 260 '30 mins' SMA but not 261. IB's documentation page doesn't mention anything about these oddly-numbered limits. This is a headache that you'll just have to work around.
-Also, Second and Minute SMAs can throw this error if the endDateTime is deep in after-hours (for instance, if endDateTime is set to 'now' and you're running this code after-hours). Let's say you're playing with this code at 11pm and the trading day has been over since 4pm: an SMA of length=1000 and barSizeSetting='1 second' will throw the 'invalid step' error. The solution is to set the _endDateTime_ to today at 4pm, then the code will work.
-4. The only other file you'll need to edit besides _get\_historical\_sma.py_ is _exchange\_info.py_, which holds important info on the trading exchange you're targeting, such as opening times, closing times and trading holidays. The info in the downloaded code is set for US exchanges so you'll need to edit this file if you're trading on a non-US exchange.
+<ol>
+<li>The SMAs don't include any after-hours values, only trading-hours values (most devs will want this functionality). This means that if you get a 10-hour SMA, for example, the SMA will include however many hours have passed in today's trading day so far and then it will jump to the final hour of the previous trading day and include hours from there. The SMAs never include after-hours information, even if an SMA spans multiple trading days.</li>
+<li>You can enter a custom datetime into the <em>endDateTime</em> arg of the <em>get_historical_sma</em> function if instead of historical data that includes info from 1 second ago you want information just from last week, last month, or last year. For instance, if you want a 10-day SMA from the two weeks of June 15-26, 2015, pass in a datetime object set to June 26, 2015 anytime after trading hours.</li>
+<li>As you play around with this code you'll invariably raise this error from IB:
+<pre><code>error id=1, errorCode=162, errorMsg=Historical Market Data Service error message:invalid step: 1</code></pre>
+The reason is because you've violated IB's historical data request limitations noted above. You may think you haven't violated the limitations, but you have: <a href = 'https://www.interactivebrokers.com/en/software/api/apiguide/tables/historical_data_limitations.htm'>IB's Historical Data Limitations</a> page doesn't always correspond with IB's true limitations. For example, with my paper trading account, when I want to get an SMA with <em>barSizeSetting='1-sec'</em>, I can set the length to 1998 but setting to 1999 throws this error; I can get a 260 '30 mins' SMA but not 261. IB's documentation page doesn't mention anything about these oddly-numbered limits. This is a headache that you'll just have to work around.<br />
+Also, Second and Minute SMAs can throw this error if the endDateTime is deep in after-hours (for instance, if endDateTime is set to 'now' and you're running this code after-hours). Let's say you're playing with this code at 11pm and the trading day has been over since 4pm: an SMA of length=1000 and barSizeSetting='1 second' will throw the 'invalid step' error. The solution is to set the _endDateTime_ to today at 4pm, then the code will work.</li>
+<li>The only other file you'll need to edit besides <em>get_historical_sma.py</em> is <em>exchange_info.py</em>, which holds important info on the trading exchange you're targeting, such as opening times, closing times and trading holidays. The info in the downloaded code is set for US exchanges so you'll need to edit this file if you're trading on a non-US exchange.</li>
+</ol>
 
 That's all there is to it. Leave a comment if you have any questions or if you think you've found a bug that needs fixing (or better yet, upload a patch and merge request on Github).
