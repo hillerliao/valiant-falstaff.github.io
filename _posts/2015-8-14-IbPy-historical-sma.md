@@ -12,7 +12,9 @@ First, download the [package set from Github](https://github.com/valiant-falstaf
 ```python3
 my_security = Security(my_ib, symbol='GOOG', secType='STK', exchange='SMART')
 ```
+
 and
+
 ```python3
 sma = my_security.get_historical_sma(length=150, barSizeSetting='1 day', ohlc='CLOSE', whatToShow='MIDPOINT', endDateTime='now')
 ```
