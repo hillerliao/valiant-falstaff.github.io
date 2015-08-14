@@ -1,6 +1,6 @@
 ---
 layout: post
-title: IbPy - different name
+title: IbPy - Getting a Historical SMA
 ---
 
 This is an incredibly simple post.
