@@ -1,6 +1,11 @@
 ---
 layout: post
 title: IbPy - Anatomy of an IB Message
+sitemap:
+  lastmod: 2015-11-02
+  priority: 0.7
+  changefreq: 'monthly'
+  exclude: 'no'
 ---
 
 My [Getting Started with IbPy post]({% post_url 2015-8-4-IbPy-Getting-Started %}) shows how to receive and react to messages that IB sends to your application, but it doesn't explain how to extract the valuable information contained in those messages. In this post I explain the structure of an IB message and demonstrate how to extract its info.

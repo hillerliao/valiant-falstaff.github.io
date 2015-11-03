@@ -1,6 +1,11 @@
 ---
 layout: post
 title: IbPy - register() vs registerAll()
+sitemap:
+  lastmod: 2015-11-02
+  priority: 0.7
+  changefreq: 'monthly'
+  exclude: 'no'
 ---
 
 In my [blog post]({% post_url 2015-8-4-IbPy-Getting-Started %}) that shows how to get started using IbPy I detail how to use the _registerAll()_ method in an IbPy application. But the IB API also offers a _register()_ method. What's the difference, and when should you use one over the other (and can you use both in the same application)?
@@ -91,4 +96,4 @@ conn.registerAll(print_message)
 conn.unregister(print_message, 'Error')
 ```
 
-One final note: **the IbPy package has a [bug](https://github.com/blampe/IbPy/issues/14) that makes the _unregisterAll()_ method not work**: calling _unregisterAll()_ doesn't raise an error, it just silently fails without unregistering any of your callbacks. I've fixed the bug and you can download [my fork of IbPy](https://github.com/valiant-falstaff/IbPy) on Github (or just [edit the code yourself](https://github.com/valiant-falstaff/IbPy/commit/fd9608b3cf495064681f72f57ec5b5840ab4ebc9) - only one line needs to be edited) If you need to use _unregisterAll()_.
+That's all there is to _register()_ and _registerAll()_. Hope this article helped!

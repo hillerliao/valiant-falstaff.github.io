@@ -1,6 +1,11 @@
 ---
 layout: post
 title: Getting Started with IbPy
+sitemap:
+  lastmod: 2015-11-02
+  priority: 0.7
+  changefreq: 'monthly'
+  exclude: 'no'
 ---
 
 Interactive Brokers, the popular online brokerage firm, has an API that allows developers to code automated trading applications, but the API doesn't support Python. Fortunately, several talented programmers have written IbPy, an implementation of the API for Python. Having spent several months working on a recent IbPy project, I can confirm that IbPy works just as well as the 'official' Java/C++/C# APIs. In this post, I'll show you how to get started using IbPy, and in subsequent posts I'll demonstrate specific tasks such as placing orders, getting option chains, getting real-time prices, [SMAs]({% post_url 2015-8-14-IbPy-historical-sma %}), EMAs, and more. 

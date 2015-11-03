@@ -2,6 +2,11 @@
 layout: page
 title: About
 permalink: /about/
+sitemap:
+  lastmod: 2015-11-02
+  priority: 0.7
+  changefreq: 'yearly'
+  exclude: 'no'
 ---
 
 Python programmer, regular showerer, staunchly opposed to cancer and Michael Bay movies 
@@ -12,6 +17,6 @@ Python, SQL, web scraping, algorithmic analysis, GUI programming & design, Drupa
 #### N00b-Fair
 C/C++, Javascript, PHP, Django, web security, network stacks, cooking
 
-### What More Could You Possibly Want?
+### It's not going to work out, Scarlett Johansson. It's not you, it's me. Everyone else:
 
 [stad718@gmail.com](mailto:stad718@gmail.com)
