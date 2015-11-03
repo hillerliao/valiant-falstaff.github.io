@@ -1,6 +1,7 @@
 ---
 layout: post
 title: IbPy - register() vs registerAll()
+description: The register and registerAll methods are the way your application reacts to info sent by IB. Learn how to use these crucial methods and the difference between them.
 sitemap:
   lastmod: 2015-11-02
   priority: 0.7

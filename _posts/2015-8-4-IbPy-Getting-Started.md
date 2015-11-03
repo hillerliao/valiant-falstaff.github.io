@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Getting Started with IbPy
+description: Learn how to install Interactive Brokers and the IbPy module on your computer and get started using IbPy to create your financial application.
 sitemap:
   lastmod: 2015-11-02
   priority: 0.7

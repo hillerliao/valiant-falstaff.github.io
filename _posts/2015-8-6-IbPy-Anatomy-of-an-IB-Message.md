@@ -1,6 +1,7 @@
 ---
 layout: post
 title: IbPy - Anatomy of an IB Message
+description: Learn about the structure of messages sent from IB and how to extract their valuable information.
 sitemap:
   lastmod: 2015-11-02
   priority: 0.7

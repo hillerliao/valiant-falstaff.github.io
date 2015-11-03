@@ -1,6 +1,7 @@
 ---
 layout: post
 title: IbPy - Passing Arguments to a Callback in register()/registerAll()
+description: The _register()_ and _registerAll()_ methods take only one argument by default, the message. You can pass additional arguments into these methods using _lambda_ functions.
 sitemap:
   lastmod: 2015-11-02
   priority: 0.7
