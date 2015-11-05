@@ -13,6 +13,7 @@ layout: default
         {{ post.description }}
         {% else %}
         {{ post.excerpt }}
+        {% endif %}
       </div>
 
       <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
