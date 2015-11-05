@@ -1,7 +1,7 @@
 ---
 layout: post
 title: IbPy - Getting a Historical SMA
-description: Oh, that Interactive Brokers had included a _getHistoricalSMA()_ function in their API. No such luck. Fortunately, I've written a Python package that makes it easy to retrieve historical SMAs programmatically from IB, so read this before you tear your hair out trying to code up a solution on your own.
+subtitle: Oh, that Interactive Brokers had included a _getHistoricalSMA()_ function in their API. No such luck. Fortunately, I've written a Python package that makes it easy to retrieve historical SMAs programmatically from IB, so read this before you tear your hair out trying to code up a solution on your own.
 sitemap:
   lastmod: 2015-11-02
   priority: 0.7
