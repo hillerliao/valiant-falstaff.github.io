@@ -9,7 +9,7 @@ sitemap:
   exclude: 'no'
 ---
 
-Python, JS, C++ dev; regular showerer; staunchly opposed to cancer and Michael Bay movies 
+Python, JavaScript, C++ dev; regular showerer; staunchly opposed to cancer and Michael Bay movies 
 
 ### Skillz
 #### Good
