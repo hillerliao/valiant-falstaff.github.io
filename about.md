@@ -9,14 +9,14 @@ sitemap:
   exclude: 'no'
 ---
 
-Python programmer, regular showerer, staunchly opposed to cancer and Michael Bay movies 
+Python, JS C++ dev; regular showerer; staunchly opposed to cancer and Michael Bay movies 
 
 ### Skillz
 #### Good
-Python, SQL, web scraping, algorithmic analysis, GUI programming & design, Drupal, HTML, CSS, snowboarding, [intelligence, getting things done](http://www.joelonsoftware.com/articles/GuerrillaInterviewing3.html)
+Python, Javascript, C, C++, SQL, React, Django, UI, web security, Linux, network stacks, web scraping, algorithmic analysis, HTML5, CSS3, snowboarding, [getting things done](http://www.joelonsoftware.com/articles/GuerrillaInterviewing3.html)
 #### N00b-Fair
-C/C++, Javascript, PHP, Django, web security, network stacks, cooking
+Bash, PHP, Flask, NoSQL, Windows, AI, cooking
 
-### It's not going to work out, Scarlett Johansson. It's not you, it's me. Everyone else:
+### Stop stalking me, Margot Robbie. Everyone else:
 
 [stad718@gmail.com](mailto:stad718@gmail.com)
