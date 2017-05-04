@@ -11,11 +11,11 @@ sitemap:
 
 Interactive Brokers, the popular online brokerage firm, has an API that allows developers to code automated trading applications, but the API doesn't support Python. Fortunately, several talented programmers have written [IbPy](https://github.com/blampe/IbPy), an implementation of the API for Python. Having spent several months working on a recent IbPy project, I can confirm that IbPy works just as well as the 'official' Java/C++/C# APIs. In this post, I'll show you how to get started using IbPy, and in subsequent posts I'll demonstrate specific tasks such as placing orders, getting option chains, getting real-time prices, [SMAs]({% post_url 2015-8-14-IbPy-historical-sma %}), EMAs, and more. 
 
-### Setting Up
-#### 1. Install IbPy
+## Setting Up
+### 1. Install IbPy
 IbPy requires Python 2.5 or newer, and thanks to the work by [Ben Alex](https://github.com/benalexau), IbPy also supports Python 3, which is the syntax I'll be using in this blog (onward and upward). Download the [IbPy module](https://github.com/blampe/IbPy) at GitHub and install using the included setup.py file (see [this page](https://code.google.com/p/ibpy/wiki/GettingStarted) for platform-specific setup instructions).
 
-#### 2. Install Trader Workstation
+### 2. Install Trader Workstation
 Trader Workstation (TWS) is Interactive Brokers' nonprogrammer-friendly standalone GUI that allows anyone with an IB account to trade directly from their computer. TWS is also the means by which a coded application connects programatically to IB's servers. Download the [TWS installer](https://www.interactivebrokers.com/en/index.php?f=552&ns=T) and install on your local machine. Note that as of this writing (August 2015) there are two download choices, TWS and TWS Latest, and only TWS Latest supports API connections, so make sure to choose TWS Latest.  
 
 The TWS installer is straightforward except for this dialog which asks whether you want to install IB Information System:
@@ -32,7 +32,7 @@ IB Gateway, rather, displays a cryptic log message after the order is placed:
 
 It's completely up to you whether to use TWS or IB Gateway to connect to IB's servers: both do the same crucial job of relaying information back and forth between your program and IB's servers, and they do it in the same exact way (your Python application won't receive different messages from IB's servers if you use IB Gateway instead of TWS, for instance). The only difference is that TWS provides easier-to-read feedback at a small CPU and memory cost. I use TWS. _(Side note: IB has a web-based alternative to TWS called WebTrader, but WebTrader doesn't support API connections - TWS and IB Gateway are your only two API connection options.)_
 
-#### 3. Configure TWS / IB Gateway
+### 3. Configure TWS / IB Gateway
 
 Once you have TWS / IB Gateway installed, you'll need to change some configuration settings in order for your software to successfully connect to IB's servers. (The following instructions use TWS as the example, but the IB Gateway instructions are virtually identical.) Navigate to the API Settings within Global Configuration in TWS. The exact way to open API settings changes with TWS updates: sometimes the click path is Edit->Global Configuration->API->Settings and then a week later the edit button will be gone and the click path will be File->Global Configuration->API->Settings. Poke around to find it. Once in API Settings, make these changes:
 
@@ -45,10 +45,10 @@ Once you have TWS / IB Gateway installed, you'll need to change some configurati
 
 See [IB's API Connections page](https://www.interactivebrokers.com/php/whiteLabel/globalConfig/configureApi.htm) for additional information on these settings.
 
-### Your first IbPy program
+## Your first IbPy program
 Now that everything is set up, it's time to open your IDE of choice and run your first IbPy script:
 
-```python3
+```python
 from ib.opt import Connection
 
 def print_message_from_ib(msg):
@@ -87,12 +87,12 @@ it means that you forgot to start TWS, and herein lies an important point: TWS n
 
 So you've run this program, but you're not sure what it means (why does the output contain errors?) and it doesn't appear to have done anything useful. The truth is, this program doesn't do anything terribly useful: it doesn't place any orders or get any real-time prices or anything like that. All it does is connect to IB's servers, print out any messages that IB automatically sends to us after we're connected, and then disconnect from IB's servers. Pretty boring, I know, but before we dive into the fun stuff, it's crucial that you understand how to connect to IB and how to react to information that IB sends to your program. So let's analyze the the main() function line-by-line:
 
-```python3
+```python
 conn = Connection.create(port=7496, clientId=100)
 ```
 You might think that this line connects to IB's servers, but it doesn't; all it does is create a Connection object in your code. This line doesn't reach out to the outside world whatsoever. If this were the only line in main(), you wouldn't receive any messages from IB because you haven't actually connected to IB's servers. But this Connection object is what we'll use to connect to IB later on in the program - it's the crucial first step in an IbPy application. The value of the port argument needs to match the "Socket port" in the TWS API settings. The value of the clientId arg doesn't actually need to match the "Master API client ID" in the TWS API settings - you could pass in 132 or 47 or 1 as the argument and the program would work fine - but unless you're running multiple different scripts to connect to the same IB account, there's no need to pass in a different value, so keep things simple by passing in the same value as "Master API client ID".
 
-```python3
+```python
 conn.registerAll(print_message_from_ib)
 ```
 This line is what causes the program to react to the messages that IB sends to it. If this line didn't exist, our program wouldn't do anything when IB sends us a message; the message would just arrive at our computer and then disappear forever. When we call registerAll(), the program starts a separate thread in the background whose job is to do nothing but wait for messages that IB sends to the program, and once it receives a message from IB, react to the message. How does it react? By calling the function we pass in as an argument to registerAll() (passing a function as an argument to another function is known as the [callback mechanism](http://stackoverflow.com/questions/1319074/parallel-python-what-is-a-callback)). In this case we passed in the _print\_message\_from\_ib_ function, which doesn't do anything interesting, it simply prints out the message for demonstration purposes. In a real-world case this function would save historical stock prices to a list or save the brokerage fees of a financial order or set a flag confirming that a stock has dipped below a certain price, etc.
@@ -110,18 +110,18 @@ If you're new to programming, you might be confused as to why you would ever wri
 
 I should also mention that the Connection object has both a _registerAll()_ and a _register()_ method. For simplicity's sake I'm only using the _registerAll()_ method in this blog post, but I've devoted a [separate blog post]({% post_url 2015-8-5-IbPy-register-vs-registerall %}) to explaining the difference between _register()_ and _registerAll()_ and when should you use one over (or in combination with) the other.
 
-```python3
+```python
 conn.connect()
 ```
 This line actually connects to IB's servers. The most important thing to know here is that you should call this _after_ calling _registerAll()_, not before, because once you connect, IB automatically sends you messages without you requesting them. At the bare minimum, it sends you a message saying that your connection to its servers was successful, but it will also send you order information on any orders that the software has placed in the past 24 hours. And sometimes (depending on when the order was executed and when the last time your software connected to IB's servers was), these order messages cannot be retrieved any other way, so if you don't process these messages immediately after calling _connect()_, you could lose the info in those messages forever. The exact details on handling order messages from IB is a discussion for another blog post, but my whole point is that it's crucially important that your callbacks are registered with the _registerAll()/register()_ methods _before_ you call the _connect()_ method. if you run _register()/registerAll()_ after _connect()_, messages might arrive from IB's servers before the _register()/registerAll()_ methods get the callbacks registered (a classic example of a race condition), in which case those messages disappear. To be clear, the messages don't sit in some list waiting to be handled - if you don't have any callbacks registered, the messages will pass through your program unhandled and you may never be able to re-request them from IB.
 
-```python3
+```python
 import time
 time.sleep(1) #Simply to give the program time to print messages sent from IB
 ```
 As the comment explains, the only reason this small wait exists is for the demonstration purposes of this tutorial: it gives IB's servers some time to send messages to our program and gives our separate thread which processes IB messages some time to print messages to the output. Without a little wait, you'd _disconnect()_ before IB has a chance to send you any messages. 
 
-```python3
+```python
 conn.disconnect()
 ```
 The _disconnect()_ method disconnects from IB's servers, but that's all it does: it doesn't destroy your Connection object or change/destroy the callback registry that you created with registerAll(). All that information is retained. If you want to re-connect, simply call conn.connect() again - no need to re-create another Connection object or re-call registerAll().

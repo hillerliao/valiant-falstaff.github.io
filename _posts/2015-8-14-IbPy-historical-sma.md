@@ -15,13 +15,13 @@ When I first started working with the Interactive Brokers API, I assumed a task 
 
 First, download the [package set from Github](https://github.com/valiant-falstaff/IbPy-Get-Historical-SMA), then make sure that the three 3rd-party modules this code uses - [dateutil](https://labix.org/python-dateutil), [pytz](https://pypi.python.org/pypi/pytz/), and [tzlocal](https://pypi.python.org/pypi/tzlocal) - are installed. Then open _get\_historical\_sma.py_ in your IDE/editor of choice. The two important lines in this script are:
 
-```python3
+```python
 my_security = Security(my_ib, symbol='GOOG', secType='STK', exchange='SMART')
 ```
 
 and
 
-```python3
+```python
 sma = my_security.get_historical_sma(length=150, barSizeSetting='1 day', ohlc='CLOSE', whatToShow='MIDPOINT', endDateTime='now')
 ```
 

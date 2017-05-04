@@ -11,7 +11,7 @@ sitemap:
 
 In my [blog post]({% post_url 2015-8-4-IbPy-Getting-Started %}) that shows how to get started using IbPy I detail how to register a callback with IbPy's _register()_ and _registerAll()_ methods so that your software can react to messages sent from IB. But the example code in that tutorial is limited in that it only allows the callback to have a single argument passed into it (the message from IB). But what if you want to pass additional arguments in to the callback? This is possible, and the easiest way is with a lambda function. Instead of explaining the basics of the lambda function (which you can find out for yourself online - I recommend [this tutorial](http://www.python-course.eu/lambda.php)), let me instead jump right into an example. Let's say you want to print out every message that IB sends, and at the beginning of the message you also want to print out the name of the person currently running the program. To do this, we'll pass a user's name as an argument to the callback. Let's call our user Rosalind:
 
-```python3
+```python
 from ib.opt import Connection
 
 def print_message_from_ib(msg, username):
@@ -49,18 +49,18 @@ Rosalind: <error id=-1, errorCode=2106, errorMsg=HMDS data farm connection is OK
 
 As you can see, instead of calling registerAll() without any additional arguments, as so:
 
-```python3
+```python
 conn.registerAll(print_message_from_ib)
 ```
 
 we called it with a lambda function as its argument, which allows us to pass in the current_user variable:
 
-```python3
+```python
 conn.registerAll(lambda msg: print_message_from_ib(msg, current_user))
 ```
 
 You can pass in as many arguments as you want using lambda. Let's say your _print\_message\_from\_ib_ function definition has 7 parameters instead of just 2. No problem:
 
-```python3
+```python
 conn.registerAll(lambda msg: print_message_from_ib(msg, current_user, arg_3, arg_4, arg_5, arg_6, arg_7))
 ```

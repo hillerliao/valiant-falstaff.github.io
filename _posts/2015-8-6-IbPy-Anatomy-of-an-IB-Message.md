@@ -11,7 +11,7 @@ sitemap:
 
 My [Getting Started with IbPy post]({% post_url 2015-8-4-IbPy-Getting-Started %}) shows how to receive and react to messages that IB sends to your application, but it doesn't explain how to extract the valuable information contained in those messages. In this post I explain the structure of an IB message and demonstrate how to extract its info.
 
-### IB Messages Are Objects
+## IB Messages Are Objects
 
 The Getting Started post might have left you with the impression that messages sent from IB are strings, but they're not. They're actually objects, and as such, they have attributes, and the attributes are what contain the valuable information. For example,  one of the messages you'll automatically receive from IB as soon as you connect to its servers is the managedAccounts message. When you print that message you'll see:
 
@@ -36,7 +36,7 @@ msg.errorMsg = "Marked data farm connection is OK: usfarm.us"
 
 Building on this information along with the info in the [Getting Started]({% post_url 2015-8-4-IbPy-Getting-Started %}) post, let's code a program that requests the current exchange time from IB's servers and then extracts the current time from the IB message:
 
-```python3
+```python
 from ib.opt import Connection
 
 def extract_time_from_currentTime_message(msg):
@@ -68,7 +68,7 @@ current exchange time: 1438900794
 
 For completeness' sake, here's how to convert the Unix timestamp that IB sends into a timezone-aware datetime object of your local time. Replace the _extract\_time\_from\_currentTime\_message_ function with this function (note that this requires installing the 3rd-party modules [pytz](https://pypi.python.org/pypi/pytz/#downloads) and [tzlocal](https://pypi.python.org/pypi/tzlocal)):
 
-```python3
+```python
 def extract_time_from_currentTime_message(msg):
     print(msg)
     
@@ -81,11 +81,11 @@ def extract_time_from_currentTime_message(msg):
 
 ```
 
-### IbPy Preconverts Message Attributes to the Appropriate Python Type
+## IbPy Preconverts Message Attributes to the Appropriate Python Type
 
 IbPy does a good job converting message attributes into appropriate Pyhton types before it sends messages IB messages your callbacks. For instance, the msg.time attribute of a currentTime message is an integer, not a string:
 
-```python3
+```python
 def extract_time_from_currentTime_message(msg):
     print(type(msg.time))
 ```
@@ -98,7 +98,7 @@ outputs:
 
 This is good because the _datetime.fromtimestamp()_ function requires an integer as its first argument - passing in a string would raise an exception. In the same way, when you request prices from IB, the message's price attributes are floats, etc. I haven't found one scenario where IbPy serves up an inappropriate type.
 
-### Message Attributes Can Be Objects With Their Own Attributes
+## Message Attributes Can Be Objects With Their Own Attributes
 
 So far, every message type we've seen has had attributes whose values are Python built-in types: strings, integers, floats, etc. But this isn't always the case: more complex messages contain attributes whose values are custom objects themselves with their own attributes. For example, imagine that your program placed an order to go long on some stocks a few minutes ago and that order has just been executed; IB will send several different messages concerning this order execution, one of which is the execDetails message:
 

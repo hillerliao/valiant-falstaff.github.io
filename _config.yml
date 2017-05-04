@@ -6,7 +6,7 @@
 name: Tad Sellers
 
 # Short bio or description (displayed in the header)
-description: Python programmer
+description: Dev, Aspiring Supermodel
 
 # URL of your avatar or profile pic (you could use your GitHub profile pic)
 #avatar: https://raw.githubusercontent.com/barryclark/jekyll-now/master/images/jekyll-logo.png
@@ -32,7 +32,6 @@ footer-links:
   youtube: # channel/<your_long_string> or user/<user-name>
   googleplus: # anything in your profile username that comes after plus.google.com/
 
-
 # Enter your Disqus shortname (not your username) to enable commenting on posts
 # You can find your shortname on the Settings page of your Disqus account
 disqus: valiant-falstaff
@@ -50,15 +49,23 @@ url:
 # then add in the baseurl here, like this: "/repository-name"
 baseurl: ""
 
-#
-# !! You don't need to change any of the configuration flags below !!
-#
 
-highlighter: pygments
+
 permalink: /:title/
 
 # The release of Jekyll Now that you're using
 version: v1.1.0
+
+# Jekyll 3 now only supports Kramdown for Markdown
+kramdown:
+  # Use GitHub flavored markdown, including triple backtick fenced code blocks
+  input: GFM
+  auto_ids: true # Note 1
+  # Jekyll 3 and GitHub Pages now only support rouge for syntax highlighting
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    # Use existing pygments syntax highlighting css
+    css_class: 'highlight'
 
 # Set the Sass partials directory, as we're using @imports
 sass:
@@ -75,3 +82,28 @@ exclude:
     - LICENSE
     - README.md
     - CNAME
+
+
+# Notes
+
+# 1
+
+# Automatically create an html id for each h1, h2, h3, ... tag. Let's say
+# your markdown file heading is
+#
+# ##Increasing Algorithm Speed
+#
+# then instead of the HTML output just being
+# 
+# <h2>Increasing Algorithm Speed</h2>
+# 
+# It will be
+#
+# <h2 id="increasing-algorithm-speed">Increasing Algorithm Speed</h2>
+#
+# This will allow us to re-create on our own site that helpful heading
+# same-page link feature you see on github .md files (called deep anchor
+# links), where when you hover over an h1, h2, etc tag, a little "link" icon
+# appears to the left of the heading, and clicking on the heading updates the
+# URL bar to the same-page link at that heading, making it easier for visitors
+# to link to important parts of the blog.

@@ -118,6 +118,7 @@ img {
 .date {
   font-style: italic;
   color: $gray;
+  padding-bottom: 0.5em;
 }
 
 // Specify the color of the selection
@@ -152,8 +153,8 @@ img {
 
 .newbie-notes { /*Tad's custom class*/
   border: 1px solid #ddd;
-  margin: 0px 50px;
-  padding: 0px 15px;
+  margin: 0px 35px;
+  padding: 0px 25px;
  }
 
 .wrapper-masthead {
@@ -287,6 +288,15 @@ nav {
 footer {
   padding: 20px 0;
   text-align: center;
+}
+
+/*********************/
+/* CUSTOM TOOLS & SCRIPTS */
+/*********************/
+
+// Make deep anchor links blackish-grey instead of the default anchor tag color
+.anchorjs-link, .anchorjs-link:hover {
+  color: grey;
 }
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS

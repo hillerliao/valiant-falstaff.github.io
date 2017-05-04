@@ -13,8 +13,8 @@
     <link rel="alternate" type="application/rss+xml" title="{{ site.name }} - {{ site.description }}" href="{{ site.baseurl }}/feed.xml" />
     {% if page.title %}<link rel="author" href="https://plus.google.com/u/0/107403885757561442081"/>{% endif %}
     
+    {% if layout.is_post %}<script src="{{ site.baseurl }}/js/node_modules/anchor-js/anchor.min.js"></script> <!-- deep anchor links -->{% endif %}
 
-    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
   </head>
 
   <body>
@@ -49,5 +49,15 @@
     </div>
 
     {% include analytics.html %}
+  
+  {% if layout.is_post %}
+  <script> // deep anchor links
+    anchors.options = {
+      placement: 'left',
+    }
+    anchors.add('.post h1, .post h2, .post h3, .post h4, .post h5, .post h6');
+  </script>
+  {% endif %}
+
   </body>
 </html>
